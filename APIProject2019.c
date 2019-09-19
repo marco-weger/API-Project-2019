@@ -28,12 +28,12 @@ int binaryRel(t_relazione *, int, char *);
 int binaryTo(t_to *, int, char *);
 
 int main() {
-    // TODO: remove redirect
+    //Redirect used during debugging
     //freopen("output.txt","w",stdout);
     //freopen("input.txt","r",stdin);
     //clock_t start = clock();
 
-    // vars
+    //vars
     char name1[100], name2[100], namerel[100];
 
     char cmd[7];
@@ -94,7 +94,7 @@ int main() {
         }
 
         if (strcmp(cmd, "addent") == 0) {
-            // ADDENT
+            //ADDENT
             i = binarySearch(entita, c_entita, name1);
             if(i == c_entita && i>0){
                 entita = (char **)realloc(entita,(c_entita+1)*sizeof(char *));
@@ -135,14 +135,11 @@ int main() {
                     entita = realloc(entita,c_entita* sizeof(char *));
 
                     for(i=0; i<c_relazioni; i++){
-                        //if(strcmp(relazioni[i].name,"aunt") == 0)
-                        //    printf("***** %s -> %d *****\n",relazioni[i].name,relazioni[i].c_to);
-
                         go = false;
                         k = binaryTo(relazioni[i].to,relazioni[i].c_to,name1);
                         if(k != relazioni[i].c_to){
                             if(strcmp(relazioni[i].to[k].to,name1) == 0){
-                                // RIMUOVO IL TO
+                                //Remove TO 
                                 for(r=0;r<relazioni[i].to[k].c_from;r++)
                                     free(relazioni[i].to[k].from[r]);
                                 free(relazioni[i].to[k].to);
@@ -157,13 +154,10 @@ int main() {
                         for(k = 0; k<relazioni[i].c_to; k++){
                             q = binarySearch(relazioni[i].to[k].from,relazioni[i].to[k].c_from,name1);
 
-                            //  qui ha già fatto c_from-- non richieso
-                            //if(strcmp(name1,"Reginald_Barclay") == 0)
-                            //    printf("***** %s -> %d - %d *****\n",relazioni[i].to[k].to,q,relazioni[i].to[k].c_from);
-
+                            //c_from-- done yet
                             if(q != relazioni[i].to[k].c_from){
                                 if(strcmp(relazioni[i].to[k].from[q],name1) == 0){
-                                    // RIMUOVO IL FROM
+                                    //Remove FROM
                                     free(relazioni[i].to[k].from[q]);
                                     for(j=q;j<relazioni[i].to[k].c_from-1;j++)
                                         relazioni[i].to[k].from[j] = relazioni[i].to[k].from[j+1];
@@ -171,10 +165,8 @@ int main() {
                                     relazioni[i].to[k].from = realloc(relazioni[i].to[k].from,relazioni[i].to[k].c_from*sizeof(char *));
                                     go = true;
 
-                                    //////// sotto
                                     if(relazioni[i].to[k].c_from == 0){
-                                        // RIMUOVO TO
-                                        // TODO: errore qua
+                                        //Remove TO
                                         free(relazioni[i].to[k].to);
                                         free(relazioni[i].to[k].from);
                                         for(j=k;j<relazioni[i].c_to-1;j++)
@@ -186,9 +178,8 @@ int main() {
                                 }
                             }
                         }
-                        /////// sotto
                         if(relazioni[i].c_to == 0){
-                            // RIMUOVO REL
+                            //Remove REL
                             for(j=0;j<relazioni[i].c_out;j++)
                                 free(relazioni[i].out[j]);
                             free(relazioni[i].name);
@@ -200,7 +191,7 @@ int main() {
                             go = false;
                         }
 
-                        // RICALCOLO MAX
+                        //Recalc. max
                         if(go || relazioni[i].c_out == 0){
                             relazioni[i].count = 0;
                             for(j=0;j<relazioni[i].c_to;j++){
@@ -233,10 +224,9 @@ int main() {
                     }
                 }
             }
-
         }
         else if(strcmp(cmd, "addrel") == 0){
-            // ADDREL
+            //ADDREL
             go = false;
             i = binarySearch(entita, c_entita, name1);
             if(i != c_entita) {
@@ -394,7 +384,6 @@ int main() {
                             q = binarySearch(relazioni[i].to[k].from, relazioni[i].to[k].c_from, name1);
                             if (q != relazioni[i].to[k].c_from) {
                                 if (strcmp(relazioni[i].to[k].from[q], name1) == 0){
-                                    //printf("%s - %s - %s\n",relazioni[i].name,relazioni[i].to[k].to,relazioni[i].to[k].from[q]);
                                     free(relazioni[i].to[k].from[q]);
                                     for(j=q;j<relazioni[i].to[k].c_from-1;j++)
                                         relazioni[i].to[k].from[j] = relazioni[i].to[k].from[j+1];
@@ -402,7 +391,7 @@ int main() {
                                     relazioni[i].to[k].from = realloc(relazioni[i].to[k].from,relazioni[i].to[k].c_from* sizeof(char *));
                                     go = true;
 
-                                    // FROM VUOTO
+                                    //FROM empty
                                     if(relazioni[i].to[k].c_from == 0){
                                         free(relazioni[i].to[k].from);
                                         free(relazioni[i].to[k].to);
@@ -435,7 +424,6 @@ int main() {
                                                 relazioni[i].c_out--;
                                                 relazioni[i].out = realloc(relazioni[i].out,relazioni[i].c_out* sizeof(char *));
 
-                                                //r = 0;
                                                 if(relazioni[i].c_out == 0){
                                                     relazioni[i].count = 0;
                                                     for(j=0;j<relazioni[i].c_to;j++){
@@ -511,7 +499,7 @@ int main() {
         }
     } while (cmd[0] != 'e' || cmd[1] != 'n' || cmd[2] != 'd' || cmd[3] != '\0');
 
-    // TODO: remove redirect
+    //Debugging code
     /*
     j = 0;
     for(i=0; i<c_entita-1; i++)
@@ -524,8 +512,7 @@ int main() {
         for(j=0; j<c_entita; j++)
             printf("%s\n",entita[j]);
     }
-     */
-    /*
+
     j = 0;
     for(i=0; i<c_relazioni-1; i++){
         if(strcmp(relazioni[i].name,relazioni[i+1].name) > 0){
@@ -544,8 +531,7 @@ int main() {
     }
     if(j != 0)
         printf("Errore ordinamento array REL!\n");
-*/
-    /*
+
     for(i=0; i<c_relazioni; i++){
         printf("%s\n",relazioni[i].name);
         for(k=0; k<relazioni[i].c_to; k++){
@@ -554,9 +540,7 @@ int main() {
                 printf("\t\t%s\n",relazioni[i].to[k].from[q]);
         }
     }
-    */
-
-    /*
+    
     go = true;
     for(i=0; i<c_output-1; i++)
         if(strcmp(output[i].name,output[i+1].name) >= 0)
@@ -571,11 +555,10 @@ int main() {
     printf("*******\n");
     for(i=0; i<c_relazioni; i++)
         printf("%s - %s - %s\n",relazioni[i].name,relazioni[i].to,relazioni[i].from);
-*/
-    //fclose(stdout);
-    //fclose(stdin);
-
-    /*
+        
+    fclose(stdout);
+    fclose(stdin);
+    
     for(i=0;i<c_relazioni;i++) {
         free(relazioni[i].name);
         free(relazioni[i].to);
@@ -591,11 +574,12 @@ int main() {
     free(output);
     for(i=0;i<c_entita;i++)
         free(entita[i]);
-    free(entita);*/
-    /*
+    free(entita);
+    
     clock_t stop = clock();
     double elapsed = (double) (stop-start) / CLOCKS_PER_SEC;
-    printf("\n Time elapsed: %.5f\n", elapsed);*/
+    printf("\n Time elapsed: %.5f\n", elapsed);
+    */
     return 0;
 }
 
