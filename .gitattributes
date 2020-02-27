@@ -1,2 +1,2 @@
-*.pdf linguist-detectable=false
-*.txt linguist-detectable=false
+*.pdf linguist-documentation
+*.txt linguist-documentation
