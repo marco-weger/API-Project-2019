@@ -1,2 +1,3 @@
 # API-Project-2019
-Coded during 2019 summer for Politecnico di Milano, evaluated "30 e lode"
+Project made during 2019 summer for "ALGORITHMS AND PRINCIPLES OF COMPUTER SCIENCE" course at Politecnico di Milano, evaluated "30 Cum Laude".
+Progettato durante l'estate 2019 per il corso di "ALGORITHMS AND PRINCIPLES OF COMPUTER SCIENCE" al Politecnico di Milano, valutato "30 Cum Laude".
